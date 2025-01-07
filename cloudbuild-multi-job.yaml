@@ -1,0 +1,69 @@
+steps:
+- args:
+  - functions
+  - deploy
+  - test1_drive_to_bigquery
+  - --region=us-central1
+  - --runtime=python312
+  - --entry-point=drive_to_bigquery
+  - --trigger-http
+  - --source=gs://madt-function/drive-to-bigquery.zip
+  - --memory=1Gi
+  - --timeout=540s
+  - --max-instances=100
+  - --min-instances=0
+  - --cpu=1
+  - --concurrency=10
+  - --service-account=one-for-al.json
+  - '--set-env-vars=CONFIG_FROM_GGSHEET={"drive_path": "https://drive.google.com/drive/folders/1EDsS1R3CB8kkPd2ISNI7GlI7LtRTDCwe?usp=drive_link",
+    "file_name_pattern": "test_data.csv", "dataset_id": "test", "table_id": "test_1",
+    "write_disposition": "WRITE_APPEND", "allow_field_addition": "True", "file_type":
+    "auto", "delimiter": "|", "sheet_name": "", "data_type_auto": "True", "date_format":
+    "auto", "job_name": "test1", "verified": "TRUE"}'
+  - --allow-unauthenticated
+  name: gcr.io/cloud-builders/gcloud
+- args:
+  - functions
+  - deploy
+  - test2_gcs_to_bigquery
+  - --region=us-central1
+  - --runtime=python312
+  - --entry-point=gcs_to_bigquery
+  - --trigger-http
+  - --source=gs://madt-function/gcs-to-bigquery.zip
+  - --memory=1Gi
+  - --timeout=540s
+  - --max-instances=100
+  - --min-instances=0
+  - --cpu=1
+  - --concurrency=10
+  - --service-account=one-for-al.json
+  - '--set-env-vars=CONFIG_FROM_GGSHEET={"bucket_name": "madt-is-lake/test", "file_name_pattern":
+    "test_table_20241121.csv", "dataset_id": "test", "table_id": "test_2", "write_disposition":
+    "WRITE_APPEND", "allow_field_addition": "True", "file_type": "auto", "delimiter":
+    "|", "sheet_name": "", "data_type_auto": "True", "date_format": "auto", "job_name":
+    "test2", "verified": "TRUE"}'
+  - --allow-unauthenticated
+  name: gcr.io/cloud-builders/gcloud
+- args:
+  - functions
+  - deploy
+  - test3_bigquery_to_bigquery
+  - --region=us-central1
+  - --runtime=python312
+  - --entry-point=bigquery_to_bigquery
+  - --trigger-http
+  - --source=gs://madt-function/bigquery-to-bigquery.zip
+  - --memory=1Gi
+  - --timeout=540s
+  - --max-instances=100
+  - --min-instances=0
+  - --cpu=1
+  - --concurrency=10
+  - --service-account=one-for-al.json
+  - '--set-env-vars=CONFIG_FROM_GGSHEET={"dest_dataset": "test", "dest_table": "test_3",
+    "mode": "append", "sql_script": "SELECT    ccc,   sum(hhh) as sum_hhh FROM `madt-is-hongtae.test.test_dtype`
+    group by ccc", "job_name": "test3", "verified": "TRUE"}'
+  - --allow-unauthenticated
+  name: gcr.io/cloud-builders/gcloud
+timeout: 1200s
