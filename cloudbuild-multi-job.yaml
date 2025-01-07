@@ -3,7 +3,7 @@ steps:
   - functions
   - deploy
   - test1_drive_to_bigquery
-  - --region=us-central1
+  - --region=asia-southeast1
   - --runtime=python312
   - --entry-point=drive_to_bigquery
   - --trigger-http
@@ -26,7 +26,7 @@ steps:
   - functions
   - deploy
   - test2_gcs_to_bigquery
-  - --region=us-central1
+  - --region=asia-southeast1
   - --runtime=python312
   - --entry-point=gcs_to_bigquery
   - --trigger-http
@@ -49,7 +49,7 @@ steps:
   - functions
   - deploy
   - test3_bigquery_to_bigquery
-  - --region=us-central1
+  - --region=asia-southeast1
   - --runtime=python312
   - --entry-point=bigquery_to_bigquery
   - --trigger-http
