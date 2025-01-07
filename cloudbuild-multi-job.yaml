@@ -69,4 +69,4 @@ steps:
     group by ccc", "job_name": "test3", "verified": "TRUE"}'
   - --allow-unauthenticated
   name: gcr.io/cloud-builders/gcloud
-timeout: 1200s
+timeout: 540s
